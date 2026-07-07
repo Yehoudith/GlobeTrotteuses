@@ -1,0 +1,42 @@
+services:
+  backend:
+    build: ./backend
+    container_name: globetrotteuse-back
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@database:5432/globetrotteuse
+    depends_on:
+      - database
+    command: pnpm dev
+
+  frontend:
+    build: ./frontend
+    container_name: globetrotteuse-front
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    command: pnpm dev --host 0.0.0.0
+
+  database:
+    image: postgres:16
+    container_name: globetrotteuse-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: globetrotteuse
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,15 +1,20 @@
 import express from "express";
-import cors from "cors";
+import { db } from "./db.js";
 
 const app = express();
+const PORT = 3000;
 
-app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Serveur Lovelace Factory OK");
+  res.send("Backend OK");
 });
 
-app.listen(3000, () => {
-  console.log("Serveur lancé sur le port 3000");
+app.get("/test-db", async (req, res) => {
+  const result = await db.query("SELECT NOW()");
+  res.json(result.rows[0]);
+});
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
