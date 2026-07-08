@@ -26,7 +26,7 @@ services:
     command: pnpm dev --host 0.0.0.0
 
   database:
-    image: postgres:16
+    image: postgres
     container_name: globetrotteuse-db
     restart: always
     environment:
@@ -34,9 +34,8 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: globetrotteuse
     ports:
-      - "5432:5432"
+      - "4500:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
+            - ./db_manipulation/migration_up.sql:/migration_up.sql
+            - ./db_manipulation/seed.sql:/seed.sql
+      
