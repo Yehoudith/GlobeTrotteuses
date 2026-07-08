@@ -1,7 +1,7 @@
-import { getTasksByTravel }from '../services/tasksService.js'
+import { getTasksByTravel } from '../services/tasksService.js'
 
 export const getAllTasks = async (req, res) => {
-    const { travel_id } =req.query
+    const { travel_id } = req.query
     
     if (!travel_id) {
         return res.status(400).json({ error: 'travel_id est requis'})

@@ -1,7 +1,8 @@
+import { db } from '../db.js'
 export const findByTravelId = async (travel_id) => {
-
-    return [
-        {id: 1, title: "Réserver l'hôtel", status: 'à_faire', category: 'hébergement' },
-        {id: 2, title: 'Acheter les billets', status: 'en_cours', category:'transport' }
-    ]
+    const result = await db.query(
+        'SELECT id, title, status, category FROM tasks WHERE travel_id = $1',
+        [travel_id]
+    )
+    return result.rows
 }

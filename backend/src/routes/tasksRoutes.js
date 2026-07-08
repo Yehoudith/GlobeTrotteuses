@@ -1,8 +1,8 @@
 import express from 'express'
-import { getAllTask } from '../controllers/tasksControllers.js'
+import { getAllTasks } from '../controllers/tasksController.js'
 
 const router = express.Router()
 
-Router.get('/', getAllTasks)
+router.get('/', getAllTasks)
 
 export default router
