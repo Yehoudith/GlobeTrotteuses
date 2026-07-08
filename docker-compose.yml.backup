@@ -1,0 +1,28 @@
+services:
+  database:
+    image: postgres:16
+    container_name: globetrotteuse-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: globetrotteuse
+    ports:
+      - "4500:5432"
+    volumes:
+      - ./db_manipulation/migration_up.sql:/migration_up.sql
+        ./db_manipulation/seed.sql:/seed.sql
+
+  backend:
+    build: ./backend
+    container_name: globetrotteuse-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - database
+
+volumes:
+  db_data:
