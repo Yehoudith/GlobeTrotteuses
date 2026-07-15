@@ -1,11 +1,16 @@
 
 import express from "express";
-import cors from "cors";
+import { db } from "./db.js";
+import travelRouter from "./src/routes/travel.js";
+import cors from 'cors';
 
 const app = express();
+const PORT = 3000;
 
-app.use(cors());
 app.use(express.json());
+app.use(cors()) 
+
+
 
 app.get('/tasks', async (req, res) => {
   res.status(200).json([
@@ -14,6 +19,20 @@ app.get('/tasks', async (req, res) => {
   ]);
 });
 
-app.listen(3000, () => {
-  console.log("Serveur lance sur le port 3000");
+app.get("/", (req, res) => {
+  res.send("Backend OK");
+});
+
+app.get("/test-db", async (req, res) => {
+  const result = await db.query("SELECT NOW()");
+  res.json(result.rows[0]);
+});
+
+// routes travels
+app.use("/travel", travelRouter)
+//
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+
 });
