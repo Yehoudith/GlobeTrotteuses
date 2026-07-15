@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import { db } from "./db.js";
 import usersRoutes from "./src/routes/users.js";
+import travelRouter from "./src/routes/travel.js";
 import cors from 'cors';
 
 // Charger les variables du fichier .env
@@ -44,8 +45,32 @@ app.get("/test-db", async (req, res) => {
 });
 
 // routes travels
-app.use("travel/", travelRouter)
+app.use("/travel", travelRouter)
 //
+
+// // Routes liées aux voyages
+// app.use("/travel", travelRouter);
+
+// Routes liées aux utilisateurs
+app.use("/users", usersRoutes);
+
+// Route inexistante
+app.use((req, res) => {
+  return res.status(404).json({
+    message: "Route introuvable",
+  });
+});
+
+// Gestion générale des erreurs
+app.use((error, req, res, next) => {
+  console.error("Erreur serveur :", error);
+
+  return res.status(500).json({
+    message: "Erreur interne du serveur",
+  });
+});
+
+// Démarrage du serveur
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
