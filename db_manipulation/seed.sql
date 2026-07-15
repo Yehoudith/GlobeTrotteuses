@@ -7,8 +7,8 @@ VALUES
 VALUES
 (
     'Julien',
-    'Dubois',
-    'julien@gmail.com',
+    'Duboi    'julien@gmail.com',
+s',
     '$2b$10$abcdefghijklmfvbjbdqrstuv'
 ),
 (
