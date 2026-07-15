@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+Les Globetrotteuses
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application web qui permet d’organiser plus facilement des voyages entre amies.
 
-Currently, two official plugins are available:
+Contexte et problème : 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Lors de l’organisation d’un voyage entre amies d’un même groupe, les informations importantes (réservations, activités, décisions et autres tâches) sont souvent dispersées. Cela peut entrainer des oublis, des difficultés de préparation, des tensions au sein du groupe et des opportunités manquées qui peuvent mettre en péril le voyage.
 
-## React Compiler
+Objectifs & critères de succès :
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Objectif : permettre de répartir et de suivre les tâches pour l’organisation d’un voyage plus facilement entre les participants et à une voyageuse de partager avec le reste des voyageurs du groupe les réservations faites.
 
-## Expanding the ESLint configuration
+Le projet est réussi si, à la fin de la période :
+- une voyageuse peut créer une tâche ;
+- une voyageuse peut ajouter une réservation ;
+- le planning du jour peut être visualiser ;
+- au moins une démo de bout en bout fonctionne sans bug bloquant
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Périmètre V1
+**Inclus (In)**
+Gestion des tâches de préparation du voyage
+Organisation des informations par catégories
+Système de vote
+Planning du voyage
+Tableau de bord récapitulatif (bonus)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Exclus (Out)**
+Gestion du budget du voyage
+Paiement en ligne entre voyageurs
+Messagerie interne
+Notifications automatiques
+Gestion avancée des réservations
+Checklist de valise
+Gestion du matériel commun
+Stockage de documents de voyage
+Météo et informations locales
+Partage de photos
+Carte des voyages réalisés
+Géolocalisation en temps réel
+Application mobile native (iOS / Android)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Rôles & responsabilités
+| Rôle | Personne | Responsable de |
+| Coordination projet | Morgane | Suivi de l’avancement global du projet
+| Animation des dailys | A tour de rôle | Animation des points d'équipe |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Conventions de travail
+- **Dépôt :** GitHub — `https://github.com/Yehoudith/GlobeTrotteuses`
+- **Branches :** main (stable) + une branche par fonctionnalité (`feat/nom-fonctionnalite`)
+- **Commits :** un message clair au présent, de préférence en anglais (ex. `ajoute le formulaire de publication de trajet`)
+- **Rituel d'équipe :** point de 15 min en début de chaque séance pour répartir le travail
+- **Outils :** code sur VS Code, suivi des tâches sur un Kanban partagé
