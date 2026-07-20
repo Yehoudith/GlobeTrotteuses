@@ -1,4 +1,4 @@
-import { db } from '../../db.js';
+import { db } from '../db.js';
 import { findTravel } from '../models/travel.js';
 import { checkNameTravel } from '../services/travel.js';
 

@@ -18,6 +18,8 @@
   },
   "type": "module",
   "dependencies": {
+    "GlobeTrotteuses": "link:..",
+    "cd": "^0.3.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
