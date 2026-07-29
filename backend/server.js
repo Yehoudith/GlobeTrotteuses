@@ -26,8 +26,6 @@ app.use('/tasks', Tasksrouter);
 app.use(cors()) 
 
 
-
-// Route de test du serveur
 app.get("/", (req, res) => {
   return res.send("Backend OK");
 });
