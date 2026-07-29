@@ -1,16 +1,17 @@
 
 import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+import { db } from "./src/db.js";
+
+import Tasksrouter from './src/routes/tasksRoutes.js'
 
 import { db } from "./db.js";
 import usersRoutes from "./src/routes/users.js";
 import travelRouter from "./src/routes/travel.js";
-
+import cors from 'cors';
 
 // Charger les variables du fichier .env
 dotenv.config();
-import Tasksrouter from './src/routes/tasksRoutes.js
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -26,6 +27,7 @@ app.use('/tasks', Tasksrouter);
 app.use(cors()) 
 
 
+// Route de test du serveur
 app.get("/", (req, res) => {
   return res.send("Backend OK");
 });

@@ -38,3 +38,4 @@ services:
     volumes:
       - ./db_manipulation/migration_up.sql:/migration_up.sql
       - ./db_manipulation/seed.sql:/seed.sql
+
