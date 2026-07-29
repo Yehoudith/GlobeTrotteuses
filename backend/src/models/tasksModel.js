@@ -1,4 +1,4 @@
-import { db } from '../db.js'
+import { db } from '../../db.js'
 
 // Récupère toutes les tâches liées à un voyage précis en base de données
 export const findByTravelId = async (travel_id) => {
