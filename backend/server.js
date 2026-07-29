@@ -1,3 +1,4 @@
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -9,7 +10,7 @@ import travelRouter from "./src/routes/travel.js";
 
 // Charger les variables du fichier .env
 dotenv.config();
-
+import Tasksrouter from './src/routes/tasksRoutes.js
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -18,10 +19,13 @@ app.use(cors());
 
 // Permettre à Express de lire le JSON envoyé dans req.body
 app.use(express.json());
+
+app.use('/tasks', Tasksrouter);
+
+
 app.use(cors()) 
 
 
-// Route de test du serveur
 app.get("/", (req, res) => {
   return res.send("Backend OK");
 });
@@ -73,4 +77,6 @@ app.use((error, req, res, next) => {
 // Démarrage du serveur
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
+
+
 });
