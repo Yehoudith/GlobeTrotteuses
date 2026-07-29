@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import { db } from "./db.js";
 import usersRoutes from "./src/routes/users.js";
 import travelRouter from "./src/routes/travel.js";
-import cors from 'cors';
+
 
 // Charger les variables du fichier .env
 dotenv.config();
