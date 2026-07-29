@@ -1,11 +1,12 @@
+
 import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+import { db } from "./src/db.js";
+
+import Tasksrouter from './src/routes/tasksRoutes.js'
 
 import { db } from "./db.js";
 import usersRoutes from "./src/routes/users.js";
 import travelRouter from "./src/routes/travel.js";
-import authRouter from "./src/routes/authentification.js"
 import cors from 'cors';
 
 // Charger les variables du fichier .env
@@ -19,6 +20,10 @@ app.use(cors());
 
 // Permettre à Express de lire le JSON envoyé dans req.body
 app.use(express.json());
+
+app.use('/tasks', Tasksrouter);
+
+
 app.use(cors()) 
 
 
@@ -49,12 +54,6 @@ app.get("/test-db", async (req, res) => {
 app.use("/travel", travelRouter)
 //
 
-// test authentification
-app.use("/auth", authRouter)
-
-// test authentification
-app.use("/auth", authRouter)
-
 // // Routes liées aux voyages
 // app.use("/travel", travelRouter);
 
@@ -80,4 +79,6 @@ app.use((error, req, res, next) => {
 // Démarrage du serveur
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
+
+
 });
