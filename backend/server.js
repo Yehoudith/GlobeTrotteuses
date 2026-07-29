@@ -1,6 +1,7 @@
 import express from "express";
 import { db } from "./db.js";
 import travelRouter from "./src/routes/travel.js";
+import authRouter from "./src/routes/authentification.js"
 import cors from 'cors';
 
 const app = express();
@@ -22,6 +23,9 @@ app.get("/test-db", async (req, res) => {
 // routes travels
 app.use("/travel", travelRouter)
 //
+
+// test authentification
+app.use("/auth", authRouter)
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
