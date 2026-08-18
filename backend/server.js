@@ -49,12 +49,9 @@ app.get("/test-db", async (req, res) => {
   }
 });
 
-// routes travels
-app.use("/travel", travelRouter)
-//
 
 // // Routes liées aux voyages
-// app.use("/travel", travelRouter);
+app.use("/travel", travelRouter);
 
 // Routes liées aux utilisateurs
 app.use("/users", usersRoutes);
