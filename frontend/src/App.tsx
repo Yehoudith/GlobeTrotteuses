@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+
 import './App.css'
+import RegisterForm from './RegisterForm';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>Salut</h1>
+      <h1>Connexion</h1>
+      <RegisterForm/> 
       <section id="spacer"></section>
     </>
   )
