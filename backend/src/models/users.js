@@ -2,7 +2,7 @@ import { db } from "../../db.js";
 
 export async function findUserByMail(email) {
   const result = await db.query(
-    "SELECT user_id, name, surname, email FROM Users WHERE email = $1",
+    "SELECT user_id, name, surname, email, password FROM Users WHERE email = $1",
     [email]
   );
 
