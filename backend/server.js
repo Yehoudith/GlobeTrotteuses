@@ -32,18 +32,17 @@ app.get("/", (req, res) => {
 });
 
 // Route de test de la base de données
-app.get("/test-db", async (req, res) => {
+app.get("/health", async (req, res) => {
   try {
     const result = await db.query("SELECT NOW()");
     
     return res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(
-      "Erreur de connexion à la base de données :",
-      error
+      "Erreur de connexion à la base de données : ", error
     );
     
-    return res.status(500).json({
+    return res.status(503).json({
       message: "Erreur de connexion à la base de données",
     });
   }
