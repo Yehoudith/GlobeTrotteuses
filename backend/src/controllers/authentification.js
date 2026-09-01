@@ -2,7 +2,7 @@ import { findUserByMail } from "../models/users.js";
 import jwt from 'jsonwebtoken'
 import { compareHash, createToken } from "../services/authentification.js";
 
-// Login : vérifier les identifiants, créer le token
+// Login : vérifier les identifiants, créer le token (logique métier, pas Express)
 export async function login(email, motDePasse) {
     const user = await findUserByMail(email);
     if (!user) throw { status: 401, message: 'Identifiants invalides'}
@@ -12,6 +12,25 @@ export async function login(email, motDePasse) {
 
     const { password, ...safeUser } = user; // Retirer le hash
     return { token, user: safeUser }
+}
+
+// NOUVEAU : controller Express qui fait le pont avec la route
+export async function loginController(req, res) {
+    try {
+        const { email, password } = req.body || {};
+
+        if (!email || !password) {
+            return res.status(400).json({ message: "Email et mot de passe requis" });
+        }
+
+        const result = await login(email, password);
+        return res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        return res.status(error.status || 500).json({
+            message: error.message || "Erreur serveur",
+        });
+    }
 }
 
 // Middleware : vérifier le token sur les routes protégées

@@ -1,15 +1,18 @@
 import { useState } from 'react'
 
 import './App.css'
-import RegisterForm from './RegisterForm';
+import RegisterForm from './RegisterForm.tsx';
+import LoginForm from './LoginForm.tsx'
 
 function App() {
+  const [view, setView] = useState<"register" | "login">("register")
 
   return (
     <>
-      <h1>Connexion</h1>
-      <RegisterForm/> 
-      <section id="spacer"></section>
+      {view === "register" && (
+        <RegisterForm onSuccess={() => setView("login")} />
+      )}
+      {view === "login" && <LoginForm />}
     </>
   )
 }
