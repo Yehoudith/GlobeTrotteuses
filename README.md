@@ -51,9 +51,164 @@ Application mobile native (iOS / Android)
 - **Rituel d'équipe :** point de 15 min en début de chaque séance pour répartir le travail
 - **Outils :** code sur VS Code, suivi des tâches sur un Kanban partagé
 
-## Installation
 
-### Backend
-```cd backend```
-```pnpm install```
+# Installation du projet GlobeTrotteuses
 
+## Prérequis
+
+Avant de commencer, vérifier que les outils suivants sont installés sur votre ordinateur :
+
+* Git
+* Docker Desktop
+* Node.js
+* pnpm
+
+Vérifier les installations avec :
+
+```bash
+git --version
+docker --version
+node --version
+pnpm --version
+```
+
+## 1. Cloner le projet
+
+Dans un terminal, se placer dans le dossier dans lequel vous souhaitez installer le projet puis exécuter :
+
+```bash
+git clone [URL_DU_REPOSITORY]
+```
+
+Entrer ensuite dans le dossier du projet :
+
+```bash
+cd GlobeTrotteuses
+```
+
+## 2. Configurer les variables d'environnement
+
+Le backend utilise des variables d'environnement pour se connecter à la base de données.
+
+Créer le fichier :
+
+```text
+backend/.env
+```
+
+Si un fichier `.env.example` est présent dans le projet, le copier :
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+Puis compléter les variables demandées.
+
+⚠️ Le fichier `.env` contient des informations sensibles et ne doit pas être envoyé sur GitHub.
+
+## 3. Installer les dépendances du front-end
+
+Se placer dans le dossier du front-end :
+
+```bash
+cd frontend
+```
+
+Installer les dépendances :
+
+```bash
+pnpm install
+```
+
+Puis revenir à la racine du projet :
+
+```bash
+cd ..
+```
+
+## 4. Démarrer Docker
+
+Vérifier que **Docker Desktop est lancé**.
+
+Depuis la racine du projet, exécuter :
+
+```bash
+docker compose up --build
+```
+
+Cette commande permet de construire et démarrer les services nécessaires au projet, notamment :
+
+* le backend Node.js / Express ;
+* la base de données PostgreSQL.
+
+Pour vérifier que les conteneurs fonctionnent :
+
+```bash
+docker compose ps
+```
+
+## 5. Démarrer le front-end
+
+Ouvrir un deuxième terminal puis exécuter :
+
+```bash
+cd frontend
+pnpm dev
+```
+
+Vite affiche alors l'adresse permettant d'accéder à l'application dans le terminal, généralement :
+
+```text
+http://localhost:5173
+```
+
+## 6. Vérifier le backend
+
+Le serveur backend fonctionne sur le port :
+
+```text
+http://localhost:3000
+```
+
+Pour vérifier que le serveur fonctionne, ouvrir :
+
+```text
+http://localhost:3000
+```
+
+Une réponse du serveur doit apparaître.
+
+## 7. Arrêter le projet
+
+Arrêter le front-end avec :
+
+```text
+Ctrl + C
+```
+
+Puis arrêter les conteneurs Docker depuis la racine du projet :
+
+```bash
+docker compose down
+```
+
+## Relancer le projet
+
+Pour relancer le projet après la première installation :
+
+### Terminal 1
+
+Depuis la racine :
+
+```bash
+docker compose up
+```
+
+### Terminal 2
+
+```bash
+cd frontend
+pnpm dev
+```
+
+L'application est alors de nouveau accessible depuis le navigateur.
