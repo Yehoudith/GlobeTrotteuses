@@ -4,9 +4,10 @@ const API_URL = "http://localhost:3000";
 
 interface RegisterFormProps {
   onSuccess: () => void;
+  onEmailExists: () => void;
 }
 
-function RegisterForm({onSuccess}: RegisterFormProps) {
+function RegisterForm({onSuccess, onEmailExists}: RegisterFormProps) {
   const [step, setStep] = useState<"email" | "details">("email");
 
   const [email, setEmail] = useState("");
@@ -33,8 +34,8 @@ function RegisterForm({onSuccess}: RegisterFormProps) {
 
       const data = await response.json();
 
-      if (data.exists) {
-        setError("Cet email est déjà utilisé");
+       if (data.exists) {
+        onEmailExists(); // redirige vers login au lieu d'afficher une erreur
         return;
       }
 

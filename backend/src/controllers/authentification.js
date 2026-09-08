@@ -14,7 +14,7 @@ export async function login(email, motDePasse) {
     return { token, user: safeUser }
 }
 
-// NOUVEAU : controller Express qui fait le pont avec la route
+// Controller Express qui fait le pont avec la route
 export async function loginController(req, res) {
     try {
         const { email, password } = req.body || {};

@@ -1,4 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
+import TaskList from "./TaskList.tsx";
 
 const API_URL = "http://localhost:3000";
 
@@ -19,6 +20,9 @@ function Dashboard() {
   const [title, setTitle] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
+
+  const [selectedTravelId, setSelectedTravelId] = useState<number | null>(null);
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
     async function fetchTravels() {
@@ -78,6 +82,7 @@ function Dashboard() {
       setTitle("");
       setDepartureDate("");
       setReturnDate("");
+      setShowCreateForm(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur serveur");
     } finally {
@@ -88,57 +93,94 @@ function Dashboard() {
   if (isLoading) return <p>Chargement...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
+  if (selectedTravelId !== null) {
+    return (
+      <div>
+        <button onClick={() => setSelectedTravelId(null)}>← Retour</button>
+        <TaskList travelId={selectedTravelId} />
+      </div>
+    );
+  }
+
+  const createForm = (
+    <form onSubmit={handleCreateTravel}>
+      <div>
+        <label htmlFor="title">Titre du voyage</label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="departureDate">Date de départ</label>
+        <input
+          type="date"
+          id="departureDate"
+          value={departureDate}
+          onChange={(e) => setDepartureDate(e.target.value)}
+          required
+        />
+      </div>
+
+      <div>
+        <label htmlFor="returnDate">Date de retour</label>
+        <input
+          type="date"
+          id="returnDate"
+          value={returnDate}
+          onChange={(e) => setReturnDate(e.target.value)}
+          required
+        />
+      </div>
+
+      <button type="submit" disabled={isCreating}>
+        {isCreating ? "Création..." : "Créer"}
+      </button>
+      <button type="button" onClick={() => setShowCreateForm(false)}>
+        Annuler
+      </button>
+    </form>
+  );
+
   if (travels.length === 0) {
     return (
-      <form onSubmit={handleCreateTravel}>
+      <div>
         <p>Vous n'avez pas encore de voyage.</p>
-
-        <div>
-          <label htmlFor="title">Titre du voyage</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="departureDate">Date de départ</label>
-          <input
-            type="date"
-            id="departureDate"
-            value={departureDate}
-            onChange={(e) => setDepartureDate(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="returnDate">Date de retour</label>
-          <input
-            type="date"
-            id="returnDate"
-            value={returnDate}
-            onChange={(e) => setReturnDate(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={isCreating}>
-          {isCreating ? "Création..." : "Créer un voyage"}
-        </button>
-      </form>
+        {showCreateForm ? (
+          createForm
+        ) : (
+          <button onClick={() => setShowCreateForm(true)}>
+            + Ajouter un voyage
+          </button>
+        )}
+      </div>
     );
   }
 
   return (
     <div>
       <h2>Vos voyages</h2>
+
+      {showCreateForm ? (
+        createForm
+      ) : (
+        <button onClick={() => setShowCreateForm(true)}>
+          + Ajouter un voyage
+        </button>
+      )}
+
       <ul>
         {travels.map((travel) => (
-          <li key={travel.travel_id}>{travel.title}</li>
+          <li key={travel.travel_id}>
+            {travel.title}
+            <button onClick={() => setSelectedTravelId(travel.travel_id)}>
+              Voir les tâches
+            </button>
+          </li>
         ))}
       </ul>
     </div>

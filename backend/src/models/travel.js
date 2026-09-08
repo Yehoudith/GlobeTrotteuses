@@ -3,10 +3,6 @@ import { db } from '../../db.js';
 export const findTravel = (titre) => {
     return db.query(`SELECT title FROM travels WHERE title = $1`, [titre])
 } 
-// pour éviter l'idor 
-// export const findTravel = (titre, id) => {
-//    return db.query(`SELECT title FROM travels WHERE title = $1 AND user_id = $2`, [titre, id])
-//} 
 
 export const findTravelsByUser = (userId) => {
     return db.query(
