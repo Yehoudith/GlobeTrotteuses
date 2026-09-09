@@ -1,8 +1,8 @@
-import { db } from '../../db.js';
 import { createNameTravel } from '../models/travel.js';
 import { checkNameTravel } from '../services/travel.js';
+import { findTravelsByUser } from '../models/travel.js';
 
-export const checkTravel = async (req,res) => {
+export const checkTravel = async (req) => {
     const { title } = req.body || {}
     if (!title) {
      return {valid: false,  error : 'Titre manquant'}
@@ -17,7 +17,7 @@ export const checkTravel = async (req,res) => {
 export const createTravel = async (req, res) => {
     try {
         const { title, starting_date, ending_date } = req.body || {}
-        const check = await checkTravel(req,res)
+        const check = await checkTravel(req)
         if (!check.valid) {
             return res.status(400).json({error : check.error})
         } 
@@ -29,8 +29,6 @@ export const createTravel = async (req, res) => {
         return res.status(500).json({ error: 'Erreur serveur'})
     }
 }
-
-import { findTravelsByUser } from '../models/travel.js';
 
 export const getUserTravels = async (req, res) => {
     try {

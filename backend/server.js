@@ -1,6 +1,4 @@
-
 import express from "express";
-import Tasksrouter from './src/routes/task.js'
 import dotenv from "dotenv"
 
 import { db } from "./db.js";
@@ -75,6 +73,7 @@ app.use((req, res) => {
 });
 
 // Gestion générale des erreurs
+// eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
   console.error("Erreur serveur :", error);
 
