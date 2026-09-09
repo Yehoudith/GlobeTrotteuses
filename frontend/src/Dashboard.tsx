@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
-import TaskList from "./TaskList.tsx";
+import TripDashboard from "./TripDashboard";
 
 const API_URL = "http://localhost:3000";
 
@@ -21,7 +21,7 @@ function Dashboard() {
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
 
-  const [selectedTravelId, setSelectedTravelId] = useState<number | null>(null);
+  const [selectedTravel, setSelectedTravel] = useState<Travel | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
@@ -93,12 +93,13 @@ function Dashboard() {
   if (isLoading) return <p>Chargement...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  if (selectedTravelId !== null) {
+  if (selectedTravel !== null) {
     return (
-      <div>
-        <button onClick={() => setSelectedTravelId(null)}>← Retour</button>
-        <TaskList travelId={selectedTravelId} />
-      </div>
+      <TripDashboard
+        travelId={selectedTravel.travel_id}
+        travelTitle={selectedTravel.title}
+        onBack={() => setSelectedTravel(null)}
+      />
     );
   }
 
@@ -177,8 +178,8 @@ function Dashboard() {
         {travels.map((travel) => (
           <li key={travel.travel_id}>
             {travel.title}
-            <button onClick={() => setSelectedTravelId(travel.travel_id)}>
-              Voir les tâches
+            <button onClick={() => setSelectedTravel(travel)}>
+              Ouvrir le voyage
             </button>
           </li>
         ))}
