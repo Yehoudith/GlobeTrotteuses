@@ -10,6 +10,7 @@ export async function login(email, motDePasse) {
     await compareHash(motDePasse, user.password)
     const token = await createToken(user.user_id)
 
+    // eslint-disable-next-line no-unused-vars
     const { password, ...safeUser } = user; // Retirer le hash
     return { token, user: safeUser }
 }
