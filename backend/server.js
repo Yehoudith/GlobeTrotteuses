@@ -1,5 +1,5 @@
 import express from "express";
-import Tasksrouter from './src/routes/tasksRoutes.js'
+import Tasksrouter from './src/routes/task.js'
 import dotenv from "dotenv"
 
 import { db } from "./db.js";
@@ -7,6 +7,7 @@ import usersRoutes from "./src/routes/users.js";
 import travelRouter from "./src/routes/travel.js";
 import cors from 'cors';
 import authRouter from "./src/routes/authentification.js";
+import tasksRouter from "./src/routes/task.js";
 
 // Charger les variables du fichier .env
 dotenv.config();
@@ -49,7 +50,7 @@ app.get("/test-db", async (req, res) => {
 });
 
 // Routes liées aux tâches
-app.use('/tasks', Tasksrouter);
+app.use('/tasks', tasksRouter);
 
 // // Routes liées aux voyages
 app.use("/travel", travelRouter);
