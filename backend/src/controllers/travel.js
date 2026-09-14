@@ -1,8 +1,8 @@
-import { db } from '../../db.js';
-import { createNameTravel, findTravel } from '../models/travel.js';
+import { createNameTravel } from '../models/travel.js';
 import { checkNameTravel } from '../services/travel.js';
+import { findTravelsByUser } from '../models/travel.js';
 
-export const checkTravel = async (req,res) => {
+export const checkTravel = async (req) => {
     const { title } = req.body || {}
     if (!title) {
      return {valid: false,  error : 'Titre manquant'}
@@ -17,11 +17,11 @@ export const checkTravel = async (req,res) => {
 export const createTravel = async (req, res) => {
     try {
         const { title, starting_date, ending_date } = req.body || {}
-        const check = await checkTravel(req,res)
+        const check = await checkTravel(req)
         if (!check.valid) {
             return res.status(400).json({error : check.error})
         } 
-        const response = await createNameTravel(title, starting_date, ending_date)
+        const response = await createNameTravel(title, starting_date, ending_date, req.user.userId)
         return res.status(201).json(response[0])
     }
     catch (error) {
@@ -29,3 +29,14 @@ export const createTravel = async (req, res) => {
         return res.status(500).json({ error: 'Erreur serveur'})
     }
 }
+
+export const getUserTravels = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const response = await findTravelsByUser(userId);
+        return res.status(200).json(response.rows);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Erreur serveur' });
+    }
+};
