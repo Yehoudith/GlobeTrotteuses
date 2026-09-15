@@ -1,12 +1,12 @@
-
 import express from "express";
-import Tasksrouter from './src/routes/tasksRoutes.js'
 import dotenv from "dotenv"
 
 import { db } from "./db.js";
 import usersRoutes from "./src/routes/users.js";
 import travelRouter from "./src/routes/travel.js";
 import cors from 'cors';
+import authRouter from "./src/routes/authentification.js";
+import tasksRouter from "./src/routes/task.js";
 
 // Charger les variables du fichier .env
 dotenv.config();
@@ -20,7 +20,6 @@ app.use(cors());
 // Permettre à Express de lire le JSON envoyé dans req.body
 app.use(express.json());
 
-app.use('/tasks', Tasksrouter);
 
 
 app.use(cors()) 
@@ -35,26 +34,31 @@ app.get("/", (req, res) => {
 app.get("/test-db", async (req, res) => {
   try {
     const result = await db.query("SELECT NOW()");
-
+    
     return res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(
       "Erreur de connexion à la base de données :",
       error
     );
-
+    
     return res.status(500).json({
       message: "Erreur de connexion à la base de données",
     });
   }
 });
 
+// Routes liées aux tâches
+app.use('/tasks', tasksRouter);
 
 // // Routes liées aux voyages
 app.use("/travel", travelRouter);
 
 // Routes liées aux utilisateurs
 app.use("/users", usersRoutes);
+
+// Routes liées à l'authentifiaction
+app.use("/auth", authRouter)
 
 // Route inexistante
 app.use((req, res) => {
@@ -64,6 +68,7 @@ app.use((req, res) => {
 });
 
 // Gestion générale des erreurs
+// eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
   console.error("Erreur serveur :", error);
 

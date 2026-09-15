@@ -1,29 +1,43 @@
 name: CI
 
 on:
-  push:
-    branches: [main, develop]
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 
 jobs:
-  ci:
+  lint-and-test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        
+          
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
+          cache-dependency-path: backend/pnpm-lock.yaml
 
       - name: Installer les dépendances
-        run: pnpm ci
+        working-directory: backend
+        run: pnpm install
 
       - name: Linter
+        working-directory: backend
         run: pnpm run lint
 
       - name: Tests
-        run: pnpm test
+        working-directory: backend
+        run: pnpm run test
+
+      - name: Audit de sécurité des dépendances (non bloquant)
+        working-directory: backend
+        run: pnpm audit --audit-level=critical
+        continue-on-error: true
