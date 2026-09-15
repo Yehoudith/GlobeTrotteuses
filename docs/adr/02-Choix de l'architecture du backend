@@ -1,0 +1,49 @@
+Date : 25/06/2026
+Statut : accepté
+
+## Contexte
+Nous devons choisir une architecture de backend pour notre application. 
+Notre V1 comporte peu de fonctionnalité, ce qui est un critère important pour ce choix. 
+Nous sommes une équipe de 3 développeurs en formation. 
+## Options considérées
+- Architecture en couche (Layered Architecture) : Très connue, facile, séparation claire des responsabilités. Pour retrouver tout les fichiers d'une même fonctionnalité, cela peut être difficile.
+- Architecture par fonctionnalités (Feature-Based) : Tout les fichiers d'une fonctionnalité sont regroupés au même endroit, architecture adapté à l'évolution du projet. Cette architecture comporte une nombre important de fichiers, même pour une petite fonctionnalité
+
+## Décision
+L'équipe décide d'adopter une architecture en couches (Layered-Based).
+
+Structure retenue :
+## Structure du backend
+
+```
+backend/
+├── src/
+│   ├── routes/
+│   │   ├── authentification.js       -- login, register
+│   │   └── travel.js                 -- check-travel, create-travel, liste des voyages
+│   ├── controllers/
+│   │   ├── authentification.js
+│   │   └── travel.js
+│   ├── services/
+│   │   ├── authentification.js
+│   │   └── travel.js
+│   ├── models/
+│   │   ├── user.js
+│   │   └── travel.js
+│   ├── db/
+│   │   └── pool.js              -- connexion PostgreSQL (pg)
+│   └── server.js                 -- point d'entrée du serveur
+├── .env
+├── package.json
+└── Dockerfile
+```
+## Conséquences
+Positives
+- Séparation des responsabilités : chaque couche a un rôle clair, ce qui rend le code plus facile à comprendre pour quelqu'un qui découvre le projet.
+- Travail en équipe facilité : plusieurs personnes peuvent travailler sur des couches différentes (une sur les routes, une autre sur la logique métier) avec moins de conflits Git.
+- Cohérence : une fois la convention posée, ajouter une nouvelle fonctionnalité suit toujours le même schéma (route → controller → service → model), ce qui réduit les décisions à prendre à chaque fois.
+
+
+Négatives 
+- Le nombre de fichiers est important et peut vite devenir très important quand des fonctionnalités sont ajoutées.
+- Même une petite fonctionnalité demande un nombre de fichiers conséquent.

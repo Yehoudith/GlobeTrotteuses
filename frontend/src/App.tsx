@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import RegisterForm from './RegisterForm'
-import LoginForm from './LoginForm'
-import Dashboard from './Dashboard'
+import RegisterForm from './components/RegisterForm'
+import LoginForm from './components/LoginForm'
+import Dashboard from './components/Dashboard'
 
 function App() {
   const [view, setView] = useState<"register" | "login" | "dashboard">("register")

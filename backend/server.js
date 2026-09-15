@@ -7,6 +7,8 @@ import travelRouter from "./src/routes/travel.js";
 import cors from 'cors';
 import authRouter from "./src/routes/authentification.js";
 import tasksRouter from "./src/routes/task.js";
+import accommodationRouter from "./src/routes/accommodation.js";
+
 
 // Charger les variables du fichier .env
 dotenv.config();
@@ -59,6 +61,9 @@ app.use("/users", usersRoutes);
 
 // Routes liées à l'authentifiaction
 app.use("/auth", authRouter)
+
+// Routes liées à l'hébergement
+app.use("/accommodations", accommodationRouter);
 
 // Route inexistante
 app.use((req, res) => {
